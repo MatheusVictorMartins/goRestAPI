@@ -5,11 +5,14 @@ import (
 	"net/http"
 
 	"github.com/MatheusVictorMartins/goRestAPI/controllers"
+	"github.com/MatheusVictorMartins/goRestAPI/middleware"
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 )
 
 func HandleRequest() {
 	r := mux.NewRouter()
+	r.Use(middleware.ContentTypeMiddleware)
 	r.HandleFunc("/", controllers.Home)
 	r.HandleFunc("/api/personalidades", controllers.ExibePersonalidades).Methods("Get")
 	r.HandleFunc("/api/personalidades/{id}", controllers.ExibePersonalidadePorId).Methods("Get")
@@ -17,5 +20,5 @@ func HandleRequest() {
 	r.HandleFunc("/api/personalidades/{id}", controllers.DeletaPersonalidade).Methods("Delete")
 	r.HandleFunc("/api/personalidades/{id}", controllers.EditaPersonalidade).Methods("Put")
 
-	log.Fatal(http.ListenAndServe(":8000", r))
+	log.Fatal(http.ListenAndServe(":8000", handlers.CORS(handlers.AllowedOrigins([]string{"*"}))(r)))
 }
