@@ -6,3 +6,4 @@
 <li>GORM</li>
 </ul>
 <p>Além disso, foi também reforçado o consumo de APIs com front-end básico em React.js</p>
+<img src="/assets/readme_print.png"/>
